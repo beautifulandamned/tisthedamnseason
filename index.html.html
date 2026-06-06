@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where the Pines Remember</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:      #f5f1ea;   /* Coconut Milk — warm off-white */
+    --page:       #faf8f3;   /* slightly lighter for body bg */
+    --forest:     #253c2c;   /* deep green replacing Eclipse blue */
+    --doe:        #b5784e;   /* Doe — warm tan accent */
+    --fudge:      #3e2d27;   /* Hot Fudge — dark brown for ink */
+    --birch:      #d4d0c8;   /* Silver Birch — lines, muted elements */
+    --faded:      #7a7268;   /* mid-tone for secondary text */
+    --gold:       #c9a96e;   /* warm gold accent, used sparingly */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 18px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--page);
+    color: var(--fudge);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  /* ══ COVER ══ */
+  .cover {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--birch);
+  }
+
+  .cover-rule {
+    width: 1px; height: 72px;
+    background: linear-gradient(to bottom, transparent, var(--birch), transparent);
+    margin: 0 auto 3rem;
+  }
+
+  .cover-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 2rem;
+  }
+
+  .cover-title {
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--forest);
+    margin-bottom: 0.5rem;
+  }
+  .cover-title em { font-style: italic; color: var(--doe); }
+
+  .cover-subtitle {
+    font-style: italic;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--faded);
+    margin-bottom: 3rem;
+  }
+
+  .cover-line {
+    width: 40px; height: 1px;
+    background: var(--birch);
+    margin: 0 auto 3rem;
+  }
+
+  .cover-author {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--faded);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .cover > * { animation: fadeUp 0.8s ease both; }
+  .cover > *:nth-child(1) { animation-delay: 0.1s; }
+  .cover > *:nth-child(2) { animation-delay: 0.25s; }
+  .cover > *:nth-child(3) { animation-delay: 0.4s; }
+  .cover > *:nth-child(4) { animation-delay: 0.55s; }
+  .cover > *:nth-child(5) { animation-delay: 0.68s; }
+  .cover > *:nth-child(6) { animation-delay: 0.8s; }
+
+  /* ══ NAV ══ */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.85rem 3rem;
+    background: rgba(250, 248, 243, 0.94);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--birch);
+  }
+  .nav-title {
+    font-style: italic;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--faded);
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faded);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--forest); }
+
+  /* ══ CONTENT ══ */
+  .content {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 6rem 2rem 9rem;
+  }
+
+  /* ══ EPIGRAPH ══ */
+  .epigraph {
+    text-align: center;
+    padding: 4rem 2rem 5rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .epigraph p {
+    font-style: italic;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--faded);
+    line-height: 1.75;
+  }
+  .epigraph cite {
+    display: block;
+    margin-top: 1.2rem;
+    font-style: normal;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--birch);
+  }
+
+  /* ══ TABLE OF CONTENTS ══ */
+  .toc { margin: 3rem 0 5rem; }
+  .toc-heading {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--forest);
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(212, 208, 200, 0.45);
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.18s;
+    gap: 0.8rem;
+  }
+  .toc-item:hover { color: var(--forest); }
+  .toc-num {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--birch);
+    min-width: 3rem;
+    transition: color 0.18s;
+  }
+  .toc-item:hover .toc-num { color: var(--doe); }
+  .toc-name { flex: 1; font-size: 0.95rem; font-weight: 300; }
+  .toc-name em { font-style: italic; color: var(--doe); }
+  .toc-item.part-row .toc-name { font-style: italic; color: var(--faded); }
+
+  /* ══ PART HEADER ══ */
+  .part-header {
+    text-align: center;
+    padding: 5rem 0 4rem;
+    margin-bottom: 3rem;
+  }
+  .part-header::after {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--birch);
+    margin: 2.5rem auto 0;
+  }
+  .part-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--forest);
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+  .part-numeral {
+    font-size: 5rem;
+    font-weight: 300;
+    color: rgba(37, 60, 44, 0.08);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+  }
+  .part-title {
+    font-size: 1.8rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--fudge);
+  }
+
+  /* ══ CHAPTER ══ */
+  .chapter { margin-bottom: 6rem; }
+  .chapter-header {
+    margin-bottom: 2.8rem;
+    padding-bottom: 1.8rem;
+    border-bottom: 1px solid rgba(212, 208, 200, 0.5);
+  }
+  .chapter-num {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--doe);
+    display: block;
+    margin-bottom: 0.7rem;
+  }
+  .chapter-title {
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: var(--forest);
+    line-height: 1.2;
+  }
+  .chapter-title em { font-style: italic; color: var(--doe); }
+  .chapter-place {
+    margin-top: 0.6rem;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--faded);
+  }
+
+  /* ══ PROSE ══ */
+  .prose p {
+    font-size: 1rem;
+    line-height: 1.9;
+    font-weight: 300;
+    color: var(--fudge);
+    margin-bottom: 1.5rem;
+  }
+  .prose p:first-of-type::first-letter {
+    font-size: 3.6rem;
+    font-weight: 600;
+    float: left;
+    line-height: 0.8;
+    margin: 0.08em 0.1em 0 0;
+    color: var(--forest);
+  }
+
+  /* ══ SCENE BREAK ══ */
+  .scene-break {
+    display: flex; align-items: center;
+    justify-content: center; gap: 0.7rem;
+    margin: 2.5rem 0;
+  }
+  .scene-break span {
+    width: 3px; height: 3px; border-radius: 50%;
+    background: var(--birch);
+  }
+
+  /* ══ LETTER / NOTE ══ */
+  .letter {
+    margin: 2.5rem 0;
+    padding: 1.8rem 0;
+    border-top: 1px solid var(--birch);
+    border-bottom: 1px solid var(--birch);
+    font-style: italic;
+    color: var(--faded);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+  .letter .letter-sign {
+    display: block;
+    text-align: right;
+    margin-top: 1.2rem;
+    font-size: 0.88rem;
+  }
+
+  /* ══ FOOTER ══ */
+  footer {
+    text-align: center;
+    padding: 3rem;
+    border-top: 1px solid var(--birch);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--birch);
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 0.8rem 1.4rem; }
+    .nav-links { gap: 1.2rem; }
+    .content { padding: 4rem 1.4rem 6rem; }
+    .cover { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<section class="cover" id="cover">
+  <div class="cover-rule"></div>
+  <p class="cover-label">A Novel</p>
+  <h1 class="cover-title">Where the <em>Pines</em> Remember</h1>
+  <p class="cover-subtitle">some roots grow back toward each other</p>
+  <div class="cover-line"></div>
+  <p class="cover-author">Your Name Here</p>
+</section>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <span class="nav-title">Where the Pines Remember</span>
+  <ul class="nav-links">
+    <li><a href="#toc">Contents</a></li>
+    <li><a href="#part-one">Part I</a></li>
+    <li><a href="#part-two">Part II</a></li>
+    <li><a href="#part-three">Part III</a></li>
+  </ul>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<main class="content">
+
+  <!-- EPIGRAPH -->
+  <div class="epigraph">
+    <p>"Some distances are measured not in miles but in silences."</p>
+    <cite>— placeholder epigraph</cite>
+  </div>
+
+  <!-- ══ PART ONE ══ -->
+  <div class="part-header" id="part-one">
+    <span class="part-label">Part One</span>
+    <span class="part-numeral">I</span>
+    <h2 class="part-title">Before the Snow Melts</h2>
+  </div>
+
+  <!-- CHAPTER 1 -->
+  <article class="chapter" id="chapter-1">
+    <header class="chapter-header">
+      <span class="chapter-num">Chapter One</span>
+      <h2 class="chapter-title">The Town at the Edge of the <em>Trees</em></h2>
+      <p class="chapter-place">Morrow Creek, Oregon · Population 2,041</p>
+    </header>
+    <div class="prose">
+      <p>
+        [Your opening paragraph goes here. Introduce the town, the mood, the season.
+        Morrow Creek exists at the foot of the Cascades where the pines thin just enough
+        to let the sky in — barely. Describe it the way only someone who grew up there
+        would: the smell of the mill, the one diner, the way fog settles into the valley
+        every October like it never plans to leave.]
+      </p>
+      <p>
+        [Continue building the world. A second paragraph might introduce your protagonist —
+        her or his relationship to this place, what it used to mean, what it means now
+        that they're back. Keep the prose unhurried, the details specific.]
+      </p>
+      <div class="scene-break"><span></span><span></span><span></span></div>
+      <p>
+        [New scene within the same chapter. A memory surfaces — the first time they
+        saw the other person, or a moment they've carried like a stone in a coat pocket
+        for fifteen years. Let it surface naturally in the prose.]
+      </p>
+      <p>
+        [Return to the present. Ground the reader back in the now — a physical detail
+        works well: the creak of porch boards, cold air through a cracked window, the
+        sound of a name they haven't heard spoken aloud in years.]
+      </p>
+      <p>
+        [Final paragraph of the chapter. End on momentum — a question, an arrival,
+        a door opening, something that makes the next chapter impossible to skip.]
+      </p>
+    </div>
+  </article>
+
+  <!-- CHAPTER 2 -->
+  <article class="chapter" id="chapter-2">
+    <header class="chapter-header">
+      <span class="chapter-num">Chapter Two</span>
+      <h2 class="chapter-title">Summer, <em>Again</em></h2>
+      <p class="chapter-place">Morrow Creek · Late June</p>
+    </header>
+    <div class="prose">
+      <p>
+        [Chapter two begins here. By now your reader has a feel for the place;
+        you can move a little faster. Bring both characters into the same space —
+        the diner, the old trailhead, the parking lot of the only grocery store in town.
+        First contact in years. Let the awkwardness breathe.]
+      </p>
+
+      <!-- Letter / note format — for messages, journal entries, unsent emails -->
+      <div class="letter">
+        <p>
+          [This block is for letters, text messages, or journal entries —
+          a note slipped under a door, an unsent email, a voicemail transcribed.
+          Italics and spare borders keep it distinct from the main prose without shouting.]
+        </p>
+        <span class="letter-sign">— [Character Name]</span>
+      </div>
+
+      <p>[Continue the chapter…]</p>
+    </div>
+  </article>
+
+  <!-- ══ PART TWO ══ -->
+  <div class="part-header" id="part-two">
+    <span class="part-label">Part Two</span>
+    <span class="part-numeral">II</span>
+    <h2 class="part-title">The Years Between</h2>
+  </div>
+
+  <!-- CHAPTER 3 -->
+  <article class="chapter" id="chapter-3">
+    <header class="chapter-header">
+      <span class="chapter-num">Chapter Three</span>
+      <h2 class="chapter-title">What We Left <em>Unsaid</em></h2>
+      <p class="chapter-place">Portland · Morrow Creek · Somewhere in Between</p>
+    </header>
+    <div class="prose">
+      <p>[Chapter content goes here. This section might cover the years apart —
+      told in summary, in fragments, in the things both characters chose not to say
+      every time they almost reached out.]</p>
+    </div>
+  </article>
+
+  <!-- ══ PART THREE ══ -->
+  <div class="part-header" id="part-three">
+    <span class="part-label">Part Three</span>
+    <span class="part-numeral">III</span>
+    <h2 class="part-title">Coming Home</h2>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <article class="chapter" id="chapter-4">
+    <header class="chapter-header">
+      <span class="chapter-num">Chapter Four</span>
+      <h2 class="chapter-title">The Road Back to <em>Morrow Creek</em></h2>
+      <p class="chapter-place">Morrow Creek · Autumn</p>
+    </header>
+    <div class="prose">
+      <p>[The homecoming chapter. Whatever form reunion takes in your story —
+      a chance encounter, a deliberate choice, a crisis that forces them together —
+      this is where the long distance between them starts, finally, to close.]</p>
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  <p>Where the Pines Remember &nbsp;·&nbsp; Draft Template &nbsp;·&nbsp; [Year]</p>
+</footer>
+
+</body>
+</html>
